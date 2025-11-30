@@ -9,7 +9,7 @@ const Projects = () => {
       id: 1,
       title: "Smart City Services System",
       description: "A comprehensive WPF-based desktop solution that revolutionizes urban living by integrating essential municipal services into a single intuitive interface.",
-      image: "assets/smart.png",
+      image: process.env.PUBLIC_URL + "/assets/smart.png",
       technologies: [".NET", "C#", "WPF", "MVVM", "SQLite"],
       features: [
         "Real-time bus reservation system with seat mapping",
@@ -24,7 +24,7 @@ const Projects = () => {
       id: 2,
       title: "PrimusAI",
       description: "A quantum leap in conversational interfaces, combining cutting-edge natural language processing with generative image capabilities.",
-      image: "assets/primus.png",
+      image: process.env.PUBLIC_URL + "/assets/primus.png",
       technologies: ["Python", "PyQT5", "TensorFlow", "NLP"],
       features: [
         "Transformer-based NLP models for human-like conversations",
@@ -39,7 +39,7 @@ const Projects = () => {
       id: 3,
       title: "Online Food Order",
       description: "A comprehensive food ordering platform that redefines culinary e-commerce with its sophisticated yet intuitive interface.",
-      image: "assets/onfood.png",
+      image: process.env.PUBLIC_URL + "/assets/onfood.png",
       technologies: [".NET", "C#", "WPF", "MVVM"],
       features: [
         "Dynamic menu management with real-time updates",
@@ -54,7 +54,7 @@ const Projects = () => {
       id: 4,
       title: "Contact Management System",
       description: "A sophisticated contact management solution with integrated communication capabilities via Twilio API.",
-      image: "assets/contact.png",
+      image: process.env.PUBLIC_URL + "/assets/contact.png",
       technologies: [".NET", "C#", "WPF", "Twilio API", "SQLite"],
       features: [
         "Direct calling and SMS via Twilio API",
@@ -69,7 +69,7 @@ const Projects = () => {
       id: 5,
       title: "Expensio - The Expense Tracker",
       description: "An intelligent expense tracking application with AI insights, visual data charts, budgeting system, and financial tips.",
-      image: "assets/expensio.png",
+      image: process.env.PUBLIC_URL + "/assets/expensio.png",
       technologies: ["Android", "Kotlin", "Room DB", "MPAndroidChart", "AI/ML"],
       features: [
         "AI-powered spending insights and predictions",
@@ -85,7 +85,7 @@ const Projects = () => {
       id: 6,
       title: "Echo Wallpapers",
       description: "A voice-activated wallpaper application that allows users to change wallpapers hands-free with voice commands.",
-      image: "assets/echowall.png",
+      image: process.env.PUBLIC_URL + "/assets/echowall.png",
       technologies: ["Android", "Kotlin", "Speech Recognition", "Wallpaper API"],
       features: [
         "Voice command wallpaper changing",
@@ -105,7 +105,7 @@ const Projects = () => {
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800 dark:text-white">
           Code <span className="text-purple-600 dark:text-purple-400">Constellations</span>
         </h2>
-        
+
         <div className="max-w-6xl mx-auto">
           {/* Project Navigation */}
           <div className="flex flex-wrap justify-center gap-2 mb-12">
@@ -113,23 +113,22 @@ const Projects = () => {
               <button
                 key={project.id}
                 onClick={() => setActiveProject(index)}
-                className={`px-4 py-2 rounded-full font-medium transition-all ${
-                  activeProject === index
+                className={`px-4 py-2 rounded-full font-medium transition-all ${activeProject === index
                     ? 'bg-purple-600 text-white shadow-md'
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/20'
-                }`}
+                  }`}
               >
                 {project.title.split(' ')[0]}
               </button>
             ))}
           </div>
-          
+
           {/* Active Project Display */}
           <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transition-all duration-500">
             <div className="md:flex">
               <div className="md:w-2/5">
-                <img 
-                  src={projects[activeProject].image} 
+                <img
+                  src={projects[activeProject].image}
                   alt={projects[activeProject].title}
                   className="w-full h-64 md:h-full object-cover"
                   onError={(e) => {
@@ -137,19 +136,19 @@ const Projects = () => {
                   }}
                 />
               </div>
-              
+
               <div className="md:w-3/5 p-6 md:p-8">
                 <h3 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4">
                   {projects[activeProject].title}
                 </h3>
-                
+
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
                   {projects[activeProject].description}
                 </p>
-                
+
                 <div className="flex flex-wrap gap-2 mb-6">
                   {projects[activeProject].technologies.map((tech, index) => (
-                    <span 
+                    <span
                       key={index}
                       className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium"
                     >
@@ -157,7 +156,7 @@ const Projects = () => {
                     </span>
                   ))}
                 </div>
-                
+
                 <div className="mb-6">
                   <h4 className="font-semibold text-gray-800 dark:text-white mb-2">Key Features:</h4>
                   <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
@@ -166,13 +165,13 @@ const Projects = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <p className="text-gray-600 dark:text-gray-300 mb-6">
                   {projects[activeProject].details}
                 </p>
-                
+
                 {projects[activeProject].downloadLink && (
-                  <a 
+                  <a
                     href={projects[activeProject].downloadLink}
                     className="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all"
                     target="_blank"
