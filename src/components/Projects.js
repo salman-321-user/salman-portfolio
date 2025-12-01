@@ -9,7 +9,7 @@ const Projects = () => {
       id: 1,
       title: "Smart City Services System",
       description: "A comprehensive WPF-based desktop solution that revolutionizes urban living by integrating essential municipal services into a single intuitive interface.",
-      image: process.env.PUBLIC_URL + "/assets/smart.png",
+      image: process.env.PUBLIC_URL + "/assets/smart.PNG",
       technologies: [".NET", "C#", "WPF", "MVVM", "SQLite"],
       features: [
         "Real-time bus reservation system with seat mapping",
