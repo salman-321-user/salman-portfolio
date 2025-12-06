@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import LoadingScreen from './components/LoadingScreen';
 import Cursor from './components/Cursor';
 import ParticleBackground from './components/ParticleBackground';
+import Services from './components/Services';
 
 function App() {
   const [darkMode, setDarkMode] = useState(true);
@@ -43,6 +44,7 @@ function App() {
       <ParticleBackground />
       <Header darkMode={darkMode} toggleTheme={toggleTheme} />
       <Hero />
+      <Services />
       <Skills />
       <Projects />
       <Design />

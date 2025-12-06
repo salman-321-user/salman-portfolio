@@ -1,4 +1,4 @@
-// components/Header.js (Enhanced)
+// components/Header.js (Enhanced with Services)
 import React, { useState, useEffect } from 'react';
 
 const Header = ({ darkMode, toggleTheme }) => {
@@ -15,6 +15,7 @@ const Header = ({ darkMode, toggleTheme }) => {
   }, []);
 
   const navItems = [
+    { name: 'Services', href: '#services' },
     { name: 'Skills', href: '#skills' },
     { name: 'Projects', href: '#projects' },
     { name: 'Designs', href: '#designs' },
@@ -95,7 +96,7 @@ const Header = ({ darkMode, toggleTheme }) => {
 
         {/* Mobile Menu */}
         <div className={`md:hidden transition-all duration-300 overflow-hidden ${
-          isMobileMenuOpen ? 'max-h-64 opacity-100 mt-4' : 'max-h-0 opacity-0'
+          isMobileMenuOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
         }`}>
           <nav className="flex flex-col space-y-3 pb-4">
             {navItems.map((item) => (

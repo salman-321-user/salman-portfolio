@@ -332,3 +332,50 @@ html {
 .animate-fade-in {
   animation: fade-in 1s ease-out forwards;
 }
+
+/* Add to index.css */
+@keyframes serviceSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.service-card {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+}
+
+.service-card-visible {
+  animation: serviceSlideIn 0.6s ease-out forwards;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;        /* Required for -webkit-line-clamp */
+  -webkit-line-clamp: 3;       /* Limits content to 3 lines */
+  -webkit-box-orient: vertical;/* Required for -webkit-line-clamp */
+  overflow: hidden;
+
+  /* Standard property for future compatibility */
+  line-clamp: 3;               /* Currently mostly ignored by browsers */
+  box-orient: vertical;        /* For non-webkit implementations if supported */
+}

@@ -1,16 +1,23 @@
-// components/Projects.js
-import React, { useState } from 'react';
+// components/Projects.js (Separate Image & Details with Fullscreen Modal)
+// Uses process.env.PUBLIC_URL for image paths (public/assets/...)
+import React, { useState, useEffect } from 'react';
 
 const Projects = () => {
   const [activeProject, setActiveProject] = useState(0);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [showFullscreen, setShowFullscreen] = useState(false);
+  const [isApp, setIsApp] = useState(false);
+
+  // base public url (will be '' in dev or the homepage path in prod)
+  const PUBLIC_URL = process.env.PUBLIC_URL || '';
 
   const projects = [
     {
       id: 1,
       title: "Smart City Services System",
       description: "A comprehensive WPF-based desktop solution that revolutionizes urban living by integrating essential municipal services into a single intuitive interface.",
-      image: process.env.PUBLIC_URL + "/assets/smart.PNG",
-      technologies: [".NET", "C#", "WPF", "MVVM", "SQLite"],
+      images: ["smart.PNG", "smart2.png", "smart3.png", "smart4.png", "smart5.png"],
+      technologies: [".NET", "C#", "WPF", "MVVM", "SQLite", "Map API", "HTML"],
       features: [
         "Real-time bus reservation system with seat mapping",
         "Emergency request prioritization with GPS tracking",
@@ -18,14 +25,28 @@ const Projects = () => {
         "Automated issue reporting with geotagging",
         "Administrative dashboards with data visualization"
       ],
-      details: "The system's bus reservation module optimizes public transport utilization with real-time availability tracking. Emergency request handling prioritizes critical incidents through intelligent routing algorithms. The integrated digital wallet enables cashless transactions for all city services while maintaining robust security protocols."
+      details: "The system's bus reservation module optimizes public transport utilization with real-time availability tracking. Emergency request handling prioritizes critical incidents through intelligent routing algorithms. The integrated digital wallet enables cashless transactions for all city services while maintaining robust security protocols.",
+      type: "software"
     },
     {
       id: 2,
       title: "PrimusAI",
       description: "A quantum leap in conversational interfaces, combining cutting-edge natural language processing with generative image capabilities.",
-      image: process.env.PUBLIC_URL + "/assets/primus.png",
-      technologies: ["Python", "PyQT5", "TensorFlow", "NLP"],
+      images: ["primus.png", "primus2.png", "primus3.png", "primus4.png", "primus5.png"],
+      technologies: [
+        "Python",
+        "PyQT5",
+        "TensorFlow",
+        "NLP",
+        "NumPy",
+        "scikit-learn",
+        "OCR",
+        "Google GenerativeAI",
+        "APIs",
+        "NLTK",
+        "Torch",
+        "TorchVision"
+      ],
       features: [
         "Transformer-based NLP models for human-like conversations",
         "Stable diffusion image generation with custom models",
@@ -33,13 +54,14 @@ const Projects = () => {
         "API endpoints for enterprise integration",
         "Continuous learning from user feedback"
       ],
-      details: "The chatbot engine leverages transformer-based models fine-tuned for specific domains, capable of handling complex queries with human-like comprehension. Image generation utilizes stable diffusion techniques with custom-trained models for consistent style output."
+      details: "The chatbot engine leverages transformer-based models fine-tuned for specific domains, capable of handling complex queries with human-like comprehension. Image generation utilizes stable diffusion techniques with custom-trained models for consistent style output.",
+      type: "software"
     },
     {
       id: 3,
       title: "Online Food Order",
       description: "A comprehensive food ordering platform that redefines culinary e-commerce with its sophisticated yet intuitive interface.",
-      image: process.env.PUBLIC_URL + "/assets/onfood.png",
+      images: ["onfood.png", "onfood2.png", "onfood3.png", "onfood4.png", "onfood5.png"],
       technologies: [".NET", "C#", "WPF", "MVVM"],
       features: [
         "Dynamic menu management with real-time updates",
@@ -48,13 +70,14 @@ const Projects = () => {
         "Delivery coordination with GPS tracking",
         "Customer loyalty programs"
       ],
-      details: "The restaurant management portal enables dynamic menu adjustments with automatic allergen tagging and nutritional information. Order processing includes smart kitchen display system integration and preparation time algorithms."
+      details: "The restaurant management portal enables dynamic menu adjustments with automatic allergen tagging and nutritional information. Order processing includes smart kitchen display system integration and preparation time algorithms.",
+      type: "software"
     },
     {
       id: 4,
       title: "Contact Management System",
       description: "A sophisticated contact management solution with integrated communication capabilities via Twilio API.",
-      image: process.env.PUBLIC_URL + "/assets/contact.png",
+      images: ["contact.png", "contact2.png", "contact3.png", "contact4.png", "contact5.png"],
       technologies: [".NET", "C#", "WPF", "Twilio API", "SQLite"],
       features: [
         "Direct calling and SMS via Twilio API",
@@ -63,14 +86,15 @@ const Projects = () => {
         "Powerful search across all contact fields",
         "Data import/export in multiple formats"
       ],
-      details: "Built with .NET's WPF framework following strict MVVM patterns. SQLite provides efficient local storage with full CRUD capabilities for thousands of contacts. The Twilio API integration enables direct voice calls and SMS messaging from within the application."
+      details: "Built with .NET's WPF framework following strict MVVM patterns. SQLite provides efficient local storage with full CRUD capabilities for thousands of contacts. The Twilio API integration enables direct voice calls and SMS messaging from within the application.",
+      type: "software"
     },
     {
       id: 5,
       title: "Expensio - The Expense Tracker",
       description: "An intelligent expense tracking application with AI insights, visual data charts, budgeting system, and financial tips.",
-      image: process.env.PUBLIC_URL + "/assets/expensio.png",
-      technologies: ["Android", "Kotlin", "Room DB", "MPAndroidChart", "AI/ML"],
+      images: ["expensio.png", "expensio2.png", "expensio3.png", "expensio4.png", "expensio5.png"],
+      technologies: ["Android Studio", "Kotlin", "Jetpack Compose", "Room DB", "MPAndroidChart", "AI"],
       features: [
         "AI-powered spending insights and predictions",
         "Interactive charts for financial data visualization",
@@ -79,14 +103,15 @@ const Projects = () => {
         "Personalized financial tips and instructions"
       ],
       details: "Expensio helps users track daily expenses with an intuitive interface. The app provides AI-driven insights into spending patterns, visual representations of financial data through interactive charts, and a comprehensive budgeting system that handles both income and loans.",
-      downloadLink: "https://expensio-the-expense-tracker.en.uptodown.com/android"
+      downloadLink: "https://expensio-the-expense-tracker.en.uptodown.com/android",
+      type: "app"
     },
     {
       id: 6,
       title: "Echo Wallpapers",
       description: "A voice-activated wallpaper application that allows users to change wallpapers hands-free with voice commands.",
-      image: process.env.PUBLIC_URL + "/assets/echowall.png",
-      technologies: ["Android", "Kotlin", "Speech Recognition", "Wallpaper API"],
+      images: ["echowall.jpg", "echowall2.jpg", "echowall3.jpg", "echowall4.jpg", "echowall5.jpg"],
+      technologies: ["Android Studio", "Kotlin", "Jetpack Compose", "Speech Recognition", "Room DB"],
       features: [
         "Voice command wallpaper changing",
         "Automatic and manual wallpaper modes",
@@ -95,100 +120,386 @@ const Projects = () => {
         "Favorites and recent wallpapers"
       ],
       details: "Echo Wallpapers revolutionizes how users interact with their device's appearance. Using advanced speech recognition, users can simply speak commands to change their wallpaper instantly. The app offers both automatic rotation based on time or location and manual selection from an extensive library.",
-      downloadLink: "#"
+      downloadLink: "#",
+      type: "app"
     }
   ];
 
-  return (
-    <section id="projects" className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800 dark:text-white">
-          Code <span className="text-purple-600 dark:text-purple-400">Constellations</span>
-        </h2>
+  // Handle image errors
+  const handleImageError = (e, imageName) => {
+    console.log(`Image failed to load: ${imageName}`);
+    // fallback to a hosted placeholder that still shows the project title
+    const projectTitle = projects[activeProject]?.title || 'Image';
+    e.target.src = `${PUBLIC_URL}/assets/placeholder.png`;
+    e.target.alt = `Placeholder for ${projectTitle}`;
+  };
 
-        <div className="max-w-6xl mx-auto">
-          {/* Project Navigation */}
-          <div className="flex flex-wrap justify-center gap-2 mb-12">
-            {projects.map((project, index) => (
-              <button
-                key={project.id}
-                onClick={() => setActiveProject(index)}
-                className={`px-4 py-2 rounded-full font-medium transition-all ${activeProject === index
+  // Reset active image index when project changes
+  useEffect(() => {
+    setActiveImageIndex(0);
+    setIsApp(projects[activeProject].type === "app");
+  }, [activeProject]);
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (showFullscreen) {
+        if (e.key === 'Escape') {
+          setShowFullscreen(false);
+        } else if (e.key === 'ArrowLeft') {
+          prevImage();
+        } else if (e.key === 'ArrowRight') {
+          nextImage();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showFullscreen, activeProject, activeImageIndex]);
+
+  // Navigation functions
+  const nextImage = () => {
+    if (projects[activeProject]?.images) {
+      setActiveImageIndex(prev => (prev + 1) % projects[activeProject].images.length);
+    }
+  };
+
+  const prevImage = () => {
+    if (projects[activeProject]?.images) {
+      setActiveImageIndex(prev => (prev - 1 + projects[activeProject].images.length) % projects[activeProject].images.length);
+    }
+  };
+
+  // Open fullscreen modal
+  const openFullscreen = (index) => {
+    setActiveImageIndex(index);
+    setShowFullscreen(true);
+  };
+
+  // helper to build asset path from public url
+  const assetPath = (filename) => `${PUBLIC_URL}/assets/${filename}`;
+
+  return (
+    <>
+      <section id="projects" className="py-20 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-gray-800 dark:text-white">
+            Code <span className="text-purple-600 dark:text-purple-400">Constellations</span>
+          </h2>
+
+          <div className="max-w-6xl mx-auto">
+            {/* Project Navigation */}
+            <div className="flex flex-wrap justify-center gap-2 mb-12">
+              {projects.map((project, index) => (
+                <button
+                  key={project.id}
+                  onClick={() => setActiveProject(index)}
+                  className={`px-4 py-2 rounded-full font-medium transition-all ${activeProject === index
                     ? 'bg-purple-600 text-white shadow-md'
                     : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/20'
-                  }`}
-              >
-                {project.title.split(' ')[0]}
-              </button>
-            ))}
-          </div>
+                    }`}
+                >
+                  {project.title.split(' ')[0]}
+                </button>
+              ))}
+            </div>
 
-          {/* Active Project Display */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transition-all duration-500">
-            <div className="md:flex">
-              <div className="md:w-2/5">
-                <img
-                  src={projects[activeProject].image}
-                  alt={projects[activeProject].title}
-                  className="w-full h-64 md:h-full object-cover"
-                  onError={(e) => {
-                    e.target.src = `https://placehold.co/600x400/1A1A2E/F8F9FA?text=${projects[activeProject].title}`;
-                  }}
-                />
-              </div>
-
-              <div className="md:w-3/5 p-6 md:p-8">
-                <h3 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4">
-                  {projects[activeProject].title}
+            {/* Main Content - Separate Image and Details Sections */}
+            <div className="space-y-12">
+              {/* Image Gallery Section - Full Width */}
+              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6">
+                <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center">
+                  Project Screenshots
                 </h3>
 
-                <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  {projects[activeProject].description}
-                </p>
+                {/* Main Image Display */}
+                <div className={`relative rounded-xl overflow-hidden mb-6 ${isApp ? 'max-w-md mx-auto' : 'max-w-4xl mx-auto'}`}>
+                  <div
+                    className={`cursor-zoom-in transition-transform duration-300 hover:scale-105 ${isApp ? 'aspect-[9/16]' : 'aspect-[16/9]'}`}
+                    onClick={() => openFullscreen(activeImageIndex)}
+                  >
+                    <img
+                      src={assetPath(projects[activeProject].images[activeImageIndex])}
+                      alt={`${projects[activeProject].title} - Image ${activeImageIndex + 1}`}
+                      className={`w-full h-full object-contain bg-gray-100 dark:bg-gray-700 ${isApp ? 'object-contain' : 'object-cover'}`}
+                      onError={(e) => handleImageError(e, projects[activeProject].images[activeImageIndex])}
+                      loading="lazy"
+                    />
+                  </div>
 
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {projects[activeProject].technologies.map((tech, index) => (
-                    <span
+                  {/* Image Navigation */}
+                  {projects[activeProject].images.length > 1 && (
+                    <div className="absolute top-4 right-4 flex space-x-2">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          prevImage();
+                        }}
+                        className="bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all"
+                        aria-label="Previous image"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          nextImage();
+                        }}
+                        className="bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all"
+                        aria-label="Next image"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Image Counter */}
+                  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    {activeImageIndex + 1} / {projects[activeProject].images.length}
+                  </div>
+
+                  {/* Fullscreen Button */}
+                  <button
+                    onClick={() => openFullscreen(activeImageIndex)}
+                    className="absolute bottom-4 right-4 bg-black/70 hover:bg-black/90 text-white p-2 rounded-full transition-all"
+                    aria-label="View fullscreen"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Thumbnail Gallery */}
+                <div className="flex justify-center space-x-3 overflow-x-auto py-4">
+                  {projects[activeProject].images.map((image, index) => (
+                    <button
                       key={index}
-                      className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium"
+                      onClick={() => setActiveImageIndex(index)}
+                      className={`flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all ${activeImageIndex === index
+                        ? 'border-purple-500 scale-105 ring-2 ring-purple-500/30'
+                        : 'border-transparent hover:border-gray-300'
+                        }`}
                     >
-                      {tech}
-                    </span>
+                      <div className={`${isApp ? 'w-20 h-32' : 'w-32 h-20'}`}>
+                        <img
+                          src={assetPath(image)}
+                          alt={`Thumbnail ${index + 1}`}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.src = `${PUBLIC_URL}/assets/thumb-placeholder.png`;
+                          }}
+                        />
+                      </div>
+                    </button>
                   ))}
                 </div>
-
-                <div className="mb-6">
-                  <h4 className="font-semibold text-gray-800 dark:text-white mb-2">Key Features:</h4>
-                  <ul className="list-disc list-inside text-gray-600 dark:text-gray-300 space-y-1">
-                    {projects[activeProject].features.map((feature, index) => (
-                      <li key={index}>{feature}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <p className="text-gray-600 dark:text-gray-300 mb-6">
-                  {projects[activeProject].details}
-                </p>
-
-                {projects[activeProject].downloadLink && (
-                  <a
-                    href={projects[activeProject].downloadLink}
-                    className="inline-flex items-center px-5 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                    Download Now
-                  </a>
-                )}
               </div>
+
+              {/* Project Details Section - Full Width */}
+              <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  {/* Left Column - Basic Info */}
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white mb-4">
+                      {projects[activeProject].title}
+                    </h3>
+
+                    <p className="text-gray-600 dark:text-gray-300 mb-6">
+                      {projects[activeProject].description}
+                    </p>
+
+                    <div className="mb-6">
+                      <h4 className="font-semibold text-gray-800 dark:text-white mb-3">Technologies Used:</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {projects[activeProject].technologies.map((tech, index) => (
+                          <span
+                            key={index}
+                            className="px-3 py-2 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/30 dark:to-pink-900/30 text-purple-700 dark:text-purple-300 rounded-lg text-sm font-medium border border-purple-200 dark:border-purple-800"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {projects[activeProject].downloadLink && (
+                      <a
+                        href={projects[activeProject].downloadLink}
+                        className="inline-flex items-center justify-center w-full px-5 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all hover:scale-105"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                        Download Now
+                      </a>
+                    )}
+                  </div>
+
+                  {/* Middle Column - Features */}
+                  <div>
+                    <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Key Features:</h4>
+                    <ul className="space-y-3">
+                      {projects[activeProject].features.map((feature, index) => (
+                        <li key={index} className="flex items-start">
+                          <svg className="w-5 h-5 text-purple-500 dark:text-purple-400 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
+                          <span className="text-gray-600 dark:text-gray-300">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Right Column - Details & Stats */}
+                  <div>
+                    <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Project Details</h4>
+                    <p
+                      className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed text-justify"
+                      style={{ textAlign: "justify", textJustify: "inter-word" }}
+                    >
+                      {projects[activeProject].details}
+                    </p>
+
+
+                    {/* Project Stats */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-4 text-center">
+                        <div className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-1">
+                          {projects[activeProject].images.length}
+                        </div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300">Screenshots</div>
+                      </div>
+                      <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-4 text-center">
+                        <div className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-1">
+                          {projects[activeProject].features.length}
+                        </div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300">Features</div>
+                      </div>
+                      <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-4 text-center col-span-2">
+                        <div className="text-xl font-bold text-purple-600 dark:text-purple-400 mb-1">
+                          {projects[activeProject].type === "app" ? "📱 Android Application" : "💻 Desktop Software"}
+                        </div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300">Platform</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Additional Info */}
+            <div className="mt-8 text-center text-gray-600 dark:text-gray-400 text-sm">
+              <p>💡 Click on any screenshot to view it fullscreen • Use arrow keys in fullscreen mode for navigation</p>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* Fullscreen Image Modal */}
+      {showFullscreen && (
+        <div
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+          onClick={() => setShowFullscreen(false)}
+        >
+          <button
+            className="absolute top-6 right-6 text-white text-3xl hover:text-purple-400 transition-colors z-10"
+            onClick={() => setShowFullscreen(false)}
+            aria-label="Close fullscreen"
+          >
+            &times;
+          </button>
+
+          <div className="relative max-w-7xl max-h-full w-full h-full flex items-center justify-center">
+            {/* Navigation Arrows */}
+            {projects[activeProject].images.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevImage();
+                  }}
+                  className="absolute left-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-4 rounded-full transition-all z-10"
+                  aria-label="Previous image"
+                >
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextImage();
+                  }}
+                  className="absolute right-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-4 rounded-full transition-all z-10"
+                  aria-label="Next image"
+                >
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </>
+            )}
+
+            {/* Main Image */}
+            <div className={`${isApp ? 'max-h-[90vh] max-w-[90vw]' : 'max-h-[90vh] max-w-[90vw]'}`}>
+              <img
+                src={assetPath(projects[activeProject].images[activeImageIndex])}
+                alt={`${projects[activeProject].title} - Fullscreen View`}
+                className="w-full h-full object-contain"
+                onError={(e) => {
+                  e.target.src = `${PUBLIC_URL}/assets/placeholder.png`;
+                }}
+              />
+            </div>
+
+            {/* Image Counter */}
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-4 py-2 rounded-full text-lg font-medium">
+              {activeImageIndex + 1} / {projects[activeProject].images.length}
+            </div>
+
+            {/* Thumbnails in Fullscreen */}
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 translate-y-12">
+              <div className="flex space-x-2">
+                {projects[activeProject].images.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveImageIndex(index);
+                    }}
+                    className={`flex-shrink-0 rounded overflow-hidden border-2 transition-all ${activeImageIndex === index
+                      ? 'border-purple-500 scale-110'
+                      : 'border-transparent hover:border-gray-300'
+                      }`}
+                  >
+                    <div className={`${isApp ? 'w-12 h-16' : 'w-16 h-12'}`}>
+                      <img
+                        src={assetPath(image)}
+                        alt={`Thumbnail ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Keyboard Instructions */}
+            <div className="absolute top-6 left-6 text-white/70 text-sm">
+              <p>Press ← → to navigate • ESC to exit</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
