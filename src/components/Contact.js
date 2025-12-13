@@ -62,7 +62,7 @@ const Contact = () => {
                   </svg>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-800 dark:text-white">Phone</h4>
+                  <h4 className="font-semibold text-gray-800 dark:text-white">WhatsApp</h4>
                   <a href="tel:+923157641129" className="text-purple-600 dark:text-purple-400 hover:underline">
                     +92 315 764 1129
                   </a>

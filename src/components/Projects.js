@@ -14,6 +14,25 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
+      title: "Car Avoidance Game",
+      description: "An addictive real-time car avoidance game with global leaderboards, profile customization, and responsive controls for both desktop and mobile devices.",
+      images: ["car.png", "car2.png", "car3.png", "car4.png", "car5.png"],
+      technologies: ["React", "Firebase", "Tailwind CSS", "Framer Motion", "React Router", "Canvas API", "Google Auth"],
+      features: [
+        "Real-time game engine with collision detection",
+        "Global leaderboard with ranking system",
+        "User authentication with Google Sign-In",
+        "Profile customization with emojis and images",
+        "Responsive design for desktop and mobile",
+        "Progressive difficulty system"
+      ],
+      details: "A high-performance car avoidance game built with React and Canvas API. Features include real-time collision detection, global leaderboards powered by Firebase, user authentication with Google Sign-In, and comprehensive profile customization. The game includes responsive controls that work seamlessly on both desktop (arrow keys) and mobile (touch buttons). The difficulty increases progressively with level progression, and scores are saved in real-time to Firebase Firestore.",
+      liveLink: "https://salman-321-user.github.io/car-avoidance-game/",
+      githubLink: "https://github.com/salman-321-user/car-avoidance-game",
+      type: "web"
+    },
+    {
+      id: 2,
       title: "Smart City Services System",
       description: "A comprehensive WPF-based desktop solution that revolutionizes urban living by integrating essential municipal services into a single intuitive interface.",
       images: ["smart.PNG", "smart2.png", "smart3.png", "smart4.png", "smart5.png"],
@@ -29,7 +48,7 @@ const Projects = () => {
       type: "software"
     },
     {
-      id: 2,
+      id: 3,
       title: "PrimusAI",
       description: "A quantum leap in conversational interfaces, combining cutting-edge natural language processing with generative image capabilities.",
       images: ["primus.png", "primus2.png", "primus3.png", "primus4.png", "primus5.png"],
@@ -58,7 +77,7 @@ const Projects = () => {
       type: "software"
     },
     {
-      id: 3,
+      id: 4,
       title: "Online Food Order",
       description: "A comprehensive food ordering platform that redefines culinary e-commerce with its sophisticated yet intuitive interface.",
       images: ["onfood.png", "onfood2.png", "onfood3.png", "onfood4.png", "onfood5.png"],
@@ -74,7 +93,7 @@ const Projects = () => {
       type: "software"
     },
     {
-      id: 4,
+      id: 5,
       title: "Contact Management System",
       description: "A sophisticated contact management solution with integrated communication capabilities via Twilio API.",
       images: ["contact.png", "contact2.png", "contact3.png", "contact4.png", "contact5.png"],
@@ -90,7 +109,7 @@ const Projects = () => {
       type: "software"
     },
     {
-      id: 5,
+      id: 6,
       title: "Expensio - The Expense Tracker",
       description: "An intelligent expense tracking application with AI insights, visual data charts, budgeting system, and financial tips.",
       images: ["expensio.png", "expensio2.png", "expensio3.png", "expensio4.png", "expensio5.png"],
@@ -107,7 +126,7 @@ const Projects = () => {
       type: "app"
     },
     {
-      id: 6,
+      id: 7,
       title: "Echo Wallpapers",
       description: "A voice-activated wallpaper application that allows users to change wallpapers hands-free with voice commands.",
       images: ["echowall.jpg", "echowall2.jpg", "echowall3.jpg", "echowall4.jpg", "echowall5.jpg"],
@@ -214,15 +233,15 @@ const Projects = () => {
                 </h3>
 
                 {/* Main Image Display */}
-                <div className={`relative rounded-xl overflow-hidden mb-6 ${isApp ? 'max-w-md mx-auto' : 'max-w-4xl mx-auto'}`}>
+                <div className={`relative rounded-xl overflow-hidden mb-6 ${projects[activeProject].type === "app" ? 'max-w-md mx-auto' : 'max-w-4xl mx-auto'}`}>
                   <div
-                    className={`cursor-zoom-in transition-transform duration-300 hover:scale-105 ${isApp ? 'aspect-[9/16]' : 'aspect-[16/9]'}`}
+                    className={`cursor-zoom-in transition-transform duration-300 hover:scale-105 ${projects[activeProject].type === "app" ? 'aspect-[9/16]' : 'aspect-[16/9]'}`}
                     onClick={() => openFullscreen(activeImageIndex)}
                   >
                     <img
                       src={assetPath(projects[activeProject].images[activeImageIndex])}
                       alt={`${projects[activeProject].title} - Image ${activeImageIndex + 1}`}
-                      className={`w-full h-full object-contain bg-gray-100 dark:bg-gray-700 ${isApp ? 'object-contain' : 'object-cover'}`}
+                      className={`w-full h-full object-contain bg-gray-100 dark:bg-gray-700 ${projects[activeProject].type === "app" ? 'object-contain' : 'object-cover'}`}
                       onError={(e) => handleImageError(e, projects[activeProject].images[activeImageIndex])}
                       loading="lazy"
                     />
@@ -286,7 +305,7 @@ const Projects = () => {
                         : 'border-transparent hover:border-gray-300'
                         }`}
                     >
-                      <div className={`${isApp ? 'w-20 h-32' : 'w-32 h-20'}`}>
+                      <div className={`${projects[activeProject].type === "app" ? 'w-20 h-32' : 'w-32 h-20'}`}>
                         <img
                           src={assetPath(image)}
                           alt={`Thumbnail ${index + 1}`}
@@ -328,19 +347,50 @@ const Projects = () => {
                       </div>
                     </div>
 
-                    {projects[activeProject].downloadLink && (
-                      <a
-                        href={projects[activeProject].downloadLink}
-                        className="inline-flex items-center justify-center w-full px-5 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all hover:scale-105"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                        Download Now
-                      </a>
-                    )}
+                    {/* Action Buttons - Updated for Car Avoidance Game */}
+                    <div className="space-y-3">
+                      {projects[activeProject].liveLink && (
+                        <a
+                          href={projects[activeProject].liveLink}
+                          className="inline-flex items-center justify-center w-full px-5 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all hover:scale-105"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                          </svg>
+                          Play Now
+                        </a>
+                      )}
+                      
+                      {projects[activeProject].githubLink && (
+                        <a
+                          href={projects[activeProject].githubLink}
+                          className="inline-flex items-center justify-center w-full px-5 py-3 bg-gradient-to-r from-gray-800 to-gray-900 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all hover:scale-105"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clipRule="evenodd" />
+                          </svg>
+                          View on GitHub
+                        </a>
+                      )}
+                      
+                      {projects[activeProject].downloadLink && !projects[activeProject].liveLink && (
+                        <a
+                          href={projects[activeProject].downloadLink}
+                          className="inline-flex items-center justify-center w-full px-5 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-medium shadow-md hover:shadow-lg transition-all hover:scale-105"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                          </svg>
+                          Download Now
+                        </a>
+                      )}
+                    </div>
                   </div>
 
                   {/* Middle Column - Features */}
@@ -368,7 +418,6 @@ const Projects = () => {
                       {projects[activeProject].details}
                     </p>
 
-
                     {/* Project Stats */}
                     <div className="grid grid-cols-2 gap-4">
                       <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-4 text-center">
@@ -385,7 +434,11 @@ const Projects = () => {
                       </div>
                       <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-4 text-center col-span-2">
                         <div className="text-xl font-bold text-purple-600 dark:text-purple-400 mb-1">
-                          {projects[activeProject].type === "app" ? "📱 Android Application" : "💻 Desktop Software"}
+                          {projects[activeProject].type === "app" 
+                            ? "📱 Android Application" 
+                            : projects[activeProject].type === "web"
+                            ? "🌐 Web Application"
+                            : "💻 Desktop Software"}
                         </div>
                         <div className="text-sm text-gray-600 dark:text-gray-300">Platform</div>
                       </div>
@@ -449,7 +502,7 @@ const Projects = () => {
             )}
 
             {/* Main Image */}
-            <div className={`${isApp ? 'max-h-[90vh] max-w-[90vw]' : 'max-h-[90vh] max-w-[90vw]'}`}>
+            <div className={`${projects[activeProject].type === "app" ? 'max-h-[90vh] max-w-[90vw]' : 'max-h-[90vh] max-w-[90vw]'}`}>
               <img
                 src={assetPath(projects[activeProject].images[activeImageIndex])}
                 alt={`${projects[activeProject].title} - Fullscreen View`}
@@ -480,7 +533,7 @@ const Projects = () => {
                       : 'border-transparent hover:border-gray-300'
                       }`}
                   >
-                    <div className={`${isApp ? 'w-12 h-16' : 'w-16 h-12'}`}>
+                    <div className={`${projects[activeProject].type === "app" ? 'w-12 h-16' : 'w-16 h-12'}`}>
                       <img
                         src={assetPath(image)}
                         alt={`Thumbnail ${index + 1}`}
